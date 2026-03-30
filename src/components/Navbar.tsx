@@ -22,11 +22,11 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-2">
           <img
             src={logo}
-            alt="Germonizer Logo"
+            alt="Gemonics Logo"
             className="h-10 w-auto object-contain"
           />
           <span className="hidden sm:block font-bold text-navy text-lg">
-            Germonizer
+            Genomics
           </span>
         </Link>
 
