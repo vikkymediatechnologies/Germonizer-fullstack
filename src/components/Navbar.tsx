@@ -1,43 +1,56 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { NavLink, Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 
-const navLinks = ["Home", "About", "Product", "Blog", "Contact"];
+const navLinks = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Product", path: "/product" },
+  { name: "Blog", path: "/blog" },
+  { name: "Contact", path: "/contact" },
+];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm shadow-sm">
-      <div className="container mx-auto flex items-center justify-between py-4 px-4">
-        <a href="#" className="flex items-center gap-2">
-          <div className="flex flex-col items-center">
-            <div className="flex gap-0.5">
-              <span className="w-2 h-2 rounded-full bg-orange" />
-              <span className="w-2 h-2 rounded-full bg-orange" />
-              <span className="w-2 h-2 rounded-full bg-orange" />
-            </div>
-            <span className="w-2 h-2 rounded-full bg-orange mt-0.5" />
-          </div>
-          <span className="text-xl font-bold text-navy tracking-tight">
-            Germ<span className="text-orange">o</span>nizer
-          </span>
-        </a>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-sm">
+      <div className="container mx-auto flex items-center justify-between py-3 px-4">
 
-        {/* Desktop nav */}
+        {/* ✅ Logo */}
+        <Link to="/" className="flex items-center gap-2">
+          <img
+            src={logo}
+            alt="Germonizer Logo"
+            className="h-10 w-auto object-contain"
+          />
+          <span className="hidden sm:block font-bold text-navy text-lg">
+            Germonizer
+          </span>
+        </Link>
+
+        {/* ✅ Desktop Navigation */}
         <ul className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <li key={link}>
-              <a
-                href={`#${link.toLowerCase()}`}
-                className="text-sm font-medium text-foreground hover:text-orange transition-colors"
+            <li key={link.name}>
+              <NavLink
+                to={link.path}
+                className={({ isActive }) =>
+                  `text-sm font-medium transition-colors ${
+                    isActive
+                      ? "text-orange"
+                      : "text-foreground hover:text-orange"
+                  }`
+                }
               >
-                {link}
-              </a>
+                {link.name}
+              </NavLink>
             </li>
           ))}
         </ul>
 
-        {/* Mobile toggle */}
+        {/* ✅ Mobile Toggle */}
         <button
           className="md:hidden text-foreground"
           onClick={() => setOpen(!open)}
@@ -47,19 +60,25 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* ✅ Mobile Menu */}
       {open && (
-        <div className="md:hidden bg-background border-t border-border px-4 pb-4">
-          <ul className="flex flex-col gap-3 pt-2">
+        <div className="md:hidden bg-background border-t border-border px-4 pb-4 animate-in slide-in-from-top duration-200">
+          <ul className="flex flex-col gap-4 pt-3">
             {navLinks.map((link) => (
-              <li key={link}>
-                <a
-                  href={`#${link.toLowerCase()}`}
-                  className="block text-sm font-medium text-foreground hover:text-orange transition-colors py-1"
+              <li key={link.name}>
+                <NavLink
+                  to={link.path}
                   onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    `block text-sm font-medium py-2 ${
+                      isActive
+                        ? "text-orange"
+                        : "text-foreground hover:text-orange"
+                    }`
+                  }
                 >
-                  {link}
-                </a>
+                  {link.name}
+                </NavLink>
               </li>
             ))}
           </ul>
